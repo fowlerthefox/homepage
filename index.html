@@ -1,119 +1,997 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ciaran's portfolio — data analytics, sports analytics, research, Power BI, R, Python and SQL." />
   <title>Ciaran | Data Analyst & Sports Analytics</title>
 
   <style>
+    :root {
+      --bg: #070b1a;
+      --bg-2: #0b1230;
+      --panel: #111936;
+      --panel-2: #172149;
+      --ink: #f5f7ff;
+      --muted: #a8b2d8;
+      --green: #86ff79;
+      --cyan: #52f7ff;
+      --yellow: #ffe66d;
+      --pink: #ff6fae;
+      --red: #ff627d;
+      --border: #34447c;
+      --shadow: #000000;
+      --pixel: 4px;
+      --content: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      line-height: 1.6;
-      color: #222;
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(82, 247, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(82, 247, 255, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 15% 15%, rgba(82, 247, 255, 0.10), transparent 28rem),
+        radial-gradient(circle at 85% 30%, rgba(255, 111, 174, 0.08), transparent 24rem),
+        var(--bg);
+      background-size: 32px 32px, 32px 32px, auto, auto, auto;
+      font-family: "Courier New", Courier, monospace;
+      line-height: 1.65;
+      overflow-x: hidden;
     }
 
-    header {
-      padding: 80px 0;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      margin-top: 50px;
-    }
-
-    .subtitle {
-      font-size: 1.3rem;
-      color: #555;
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .project {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.018) 0,
+        rgba(255,255,255,0.018) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      mix-blend-mode: screen;
     }
 
     a {
-      color: #005eb8;
+      color: inherit;
+    }
+
+    ::selection {
+      background: var(--cyan);
+      color: var(--bg);
+    }
+
+    .wrap {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+    }
+
+    .pixel-box {
+      position: relative;
+      background: linear-gradient(180deg, rgba(23,33,73,0.94), rgba(13,19,48,0.96));
+      border: var(--pixel) solid var(--border);
+      box-shadow:
+        var(--pixel) var(--pixel) 0 var(--shadow),
+        calc(var(--pixel) * 2) calc(var(--pixel) * 2) 0 rgba(0,0,0,0.28);
+    }
+
+    .pixel-box::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+
+    .topbar {
+      border-bottom: 4px solid var(--border);
+      background: rgba(7,11,26,0.92);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      text-decoration: none;
+      font-weight: 900;
+      color: var(--green);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-shadow: 2px 2px 0 #173815;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: var(--cyan);
+    }
+
+    main {
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 42px;
+      align-items: center;
+      padding: 76px 0 56px;
+    }
+
+    .eyebrow {
+      color: var(--yellow);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(3.4rem, 10vw, 7.8rem);
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+      color: white;
+      text-shadow:
+        4px 4px 0 #203266,
+        8px 8px 0 rgba(0,0,0,0.35);
+    }
+
+    .hero h1 .cursor {
+      color: var(--green);
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .hero-sub {
+      margin: 28px 0 0;
+      max-width: 760px;
+      font-size: clamp(1.05rem, 2vw, 1.32rem);
+      color: var(--muted);
+    }
+
+    .hero-sub strong {
+      color: var(--cyan);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 17px;
+      border: 3px solid var(--ink);
+      background: var(--green);
+      color: var(--bg);
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      box-shadow: 5px 5px 0 #000;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translate(3px, 3px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--cyan);
+    }
+
+    .player-card {
+      padding: 28px;
+    }
+
+    .player-card h2 {
+      margin: 0 0 18px;
+      color: var(--yellow);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .avatar {
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 24px;
+      border: 4px solid var(--cyan);
+      background:
+        linear-gradient(45deg, #172149 25%, transparent 25%),
+        linear-gradient(-45deg, #172149 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #172149 75%),
+        linear-gradient(-45deg, transparent 75%, #172149 75%),
+        #0b1230;
+      background-size: 20px 20px;
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      box-shadow: 6px 6px 0 #000;
+      font-size: 3.8rem;
+      image-rendering: pixelated;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(168,178,216,0.26);
+      font-size: 0.92rem;
+    }
+
+    .stat-row:last-child {
+      border-bottom: 0;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .section {
+      padding: 86px 0 10px;
+      scroll-margin-top: 82px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .level {
+      color: var(--pink);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-size: 0.82rem;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 860px;
+      margin-bottom: 28px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 24px;
+    }
+
+    .profile-copy,
+    .now-playing {
+      padding: 28px;
+    }
+
+    .profile-copy p:first-child {
+      margin-top: 0;
+    }
+
+    .profile-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .now-playing h3,
+    .terminal h3 {
+      margin-top: 0;
+      color: var(--green);
+      text-transform: uppercase;
+      font-size: 1rem;
+      letter-spacing: 0.09em;
+    }
+
+    .quest-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .quest {
+      padding: 26px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quest-number {
+      color: var(--pink);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .quest h3 {
+      margin: 8px 0 14px;
+      color: var(--yellow);
+      font-size: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    .quest p {
+      color: var(--muted);
+      margin-top: 0;
+    }
+
+    .quest .tags {
+      margin-top: auto;
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 4px 4px 0 0;
+      padding: 4px 8px;
+      border: 2px solid var(--border);
+      color: var(--cyan);
+      background: rgba(82,247,255,0.04);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .toolkit {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .skill-card {
+      padding: 22px;
+    }
+
+    .skill-card h3 {
+      margin: 0 0 14px;
+      color: var(--green);
+      text-transform: uppercase;
+      font-size: 0.98rem;
+    }
+
+    .skill-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--muted);
+    }
+
+    .skill-card li {
+      padding: 5px 0;
+    }
+
+    .skill-card li::before {
+      content: ">";
+      color: var(--yellow);
+      margin-right: 8px;
+      font-weight: 900;
+    }
+
+    .research-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+    }
+
+    .terminal,
+    .achievement-panel {
+      padding: 28px;
+    }
+
+    .terminal {
+      background: #03070d;
+      border-color: #244638;
+      color: #b8ffc0;
+    }
+
+    .terminal-line {
+      margin: 0 0 12px;
+    }
+
+    .prompt {
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .achievement {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 15px 0;
+      border-bottom: 1px dashed rgba(168,178,216,0.25);
+    }
+
+    .achievement:last-child {
+      border-bottom: 0;
+    }
+
+    .achievement-icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255,230,109,0.06);
+      font-weight: 900;
+      box-shadow: 3px 3px 0 #000;
+    }
+
+    .achievement strong {
+      color: var(--ink);
+      display: block;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .achievement span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .contact-card {
+      padding: 38px;
+      text-align: center;
+    }
+
+    .contact-card h2 {
+      margin-bottom: 14px;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 26px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    footer {
+      padding: 46px 0 60px;
+      text-align: center;
+      color: #6f7da8;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .coin {
+      color: var(--yellow);
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .profile-grid,
+      .research-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 58px;
+      }
+
+      .player-card {
+        max-width: 560px;
+      }
+
+      .toolkit {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar {
+        position: relative;
+      }
+
+      .topbar-inner {
+        padding: 18px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        justify-content: flex-start;
+        gap: 12px 18px;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3.1rem, 21vw, 5rem);
+      }
+
+      .quest-grid,
+      .toolkit {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding-top: 68px;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .level {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .contact-card,
+      .profile-copy,
+      .now-playing,
+      .terminal,
+      .achievement-panel,
+      .quest,
+      .player-card {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .cursor {
+        animation: none !important;
+      }
+
+      .btn {
+        transition: none;
+      }
     }
   </style>
 </head>
 
 <body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#home">FOWLER<span>THE</span>FOX // PORTFOLIO</a>
 
-<header>
-  <h1>Ciaran</h1>
-  <p class="subtitle">
-    Data Analyst | Sports Analytics | Researcher
-  </p>
-
-  <p>
-    I work across data analytics, business intelligence and sports analytics,
-    with particular research interests in Gaelic football and soccer.
-  </p>
-</header>
-
-<section>
-  <h2>About</h2>
-
-  <p>
-    My work focuses on using data to support decision-making through
-    reproducible analysis, statistical modelling, data visualisation and
-    interactive reporting.
-  </p>
-</section>
-
-<section>
-  <h2>Selected Projects</h2>
-
-  <div class="projects">
-
-    <div class="project">
-      <h3>Gaelic Football Analytics</h3>
-      <p>
-        Development of possession, transition and expected threat models
-        for Gaelic football.
-      </p>
+      <nav aria-label="Main navigation">
+        <a href="#profile">Profile</a>
+        <a href="#quests">Projects</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#research">Research</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="project">
-      <h3>Soccer Analytics</h3>
-      <p>
-        Team performance analysis incorporating possession, passing,
-        shot creation and tactical analysis.
-      </p>
+  <main id="home">
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Player 1 Ready // Data + Sport + Research</p>
+
+          <h1>CIARAN<span class="cursor">_</span></h1>
+
+          <p class="hero-sub">
+            <strong>Data Analyst</strong> working across business intelligence,
+            data engineering and applied analytics, with a particular focus on
+            <strong>sports analytics</strong> and quantitative research in Gaelic football.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#quests">▶ Start Game</a>
+            <a class="btn secondary" href="https://github.com/fowlerthefox" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          </div>
+        </div>
+
+        <aside class="player-card pixel-box" aria-label="Player profile">
+          <h2>Player Profile</h2>
+
+          <div class="avatar" aria-hidden="true">🦊</div>
+
+          <div class="stat-row">
+            <span class="stat-label">Class</span>
+            <span class="stat-value">Data Analyst</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Specialism</span>
+            <span class="stat-value">Analytics & BI</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Side Quest</span>
+            <span class="stat-value">Sports Analytics</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Research</span>
+            <span class="stat-value">Gaelic Football</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Handle</span>
+            <span class="stat-value">@fowlerthefox</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="profile">
+        <div class="section-heading">
+          <span class="level">Level 01</span>
+          <h2>Player Profile</h2>
+        </div>
+
+        <p class="lead">
+          I use data to turn complex operational and sporting problems into
+          structured evidence, clear visualisations and practical decisions.
+        </p>
+
+        <div class="profile-grid">
+          <div class="profile-copy pixel-box">
+            <p>
+              My professional work spans data analysis, business intelligence,
+              reporting, data modelling and the development of analytical
+              infrastructure. I work with large administrative datasets and build
+              reproducible processes that move analysis from raw source data through
+              to decision-ready dashboards and reporting.
+            </p>
+
+            <p>
+              Alongside this work, I conduct sports analytics research with a
+              particular interest in Gaelic football. This includes possession
+              modelling, Markov chains, expected threat, shot modelling and the
+              development of tools for collecting structured event data from match video.
+            </p>
+
+            <p>
+              I also apply analytics in soccer, combining match statistics,
+              positional information, video and tactical interpretation to identify
+              patterns that can support coaches and players.
+            </p>
+          </div>
+
+          <aside class="now-playing pixel-box">
+            <h3>Now Playing</h3>
+
+            <div class="stat-row">
+              <span class="stat-label">Main Quest</span>
+              <span class="stat-value">Data Analytics & BI</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Research</span>
+              <span class="stat-value">MSc by Research</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Domain</span>
+              <span class="stat-value">Gaelic Football</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Mode</span>
+              <span class="stat-value">Build → Analyse → Explain</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="quests">
+        <div class="section-heading">
+          <span class="level">Level 02</span>
+          <h2>Quest Log</h2>
+        </div>
+
+        <p class="lead">
+          Selected areas of work that combine data engineering, modelling,
+          visualisation and applied decision support.
+        </p>
+
+        <div class="quest-grid">
+          <article class="quest pixel-box">
+            <span class="quest-number">Quest 01 // Research</span>
+            <h3>Gaelic Football Expected Threat</h3>
+            <p>
+              Modelling the value of possession across the pitch using zonal
+              transition probabilities and Markov chain methods. The aim is to
+              quantify how actions change the likelihood of a team producing a score.
+            </p>
+            <div class="tags">
+              <span class="tag">R</span>
+              <span class="tag">Markov Chains</span>
+              <span class="tag">xT</span>
+              <span class="tag">Sports Data</span>
+            </div>
+          </article>
+
+          <article class="quest pixel-box">
+            <span class="quest-number">Quest 02 // Build</span>
+            <h3>Match Tagging Application</h3>
+            <p>
+              Development of a bespoke event-tagging workflow for Gaelic football
+              video, capturing possession changes, transitions, shots, kickouts,
+              turnovers and spatial information for subsequent analysis.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Video</span>
+              <span class="tag">Event Data</span>
+              <span class="tag">GitHub</span>
+            </div>
+          </article>
+
+          <article class="quest pixel-box">
+            <span class="quest-number">Quest 03 // Football</span>
+            <h3>Soccer Performance Analysis</h3>
+            <p>
+              Match-level analysis combining team statistics, possession,
+              passing, territorial information and video review. Work includes
+              tactical analysis, passing networks, turnovers, rest defence and
+              patterns associated with creating and conceding chances.
+            </p>
+            <div class="tags">
+              <span class="tag">Performance</span>
+              <span class="tag">Tactical Analysis</span>
+              <span class="tag">Visualisation</span>
+            </div>
+          </article>
+
+          <article class="quest pixel-box">
+            <span class="quest-number">Quest 04 // Work</span>
+            <h3>Business Intelligence & HE Analytics</h3>
+            <p>
+              Building analytical datasets and Power BI reporting from complex
+              higher-education data. This includes KPI definitions, progression,
+              completion, student populations, survey data and repeatable reporting
+              structures.
+            </p>
+            <div class="tags">
+              <span class="tag">Power BI</span>
+              <span class="tag">DAX</span>
+              <span class="tag">SQL</span>
+              <span class="tag">DuckDB</span>
+            </div>
+          </article>
+
+          <article class="quest pixel-box">
+            <span class="quest-number">Quest 05 // Systems</span>
+            <h3>Data Infrastructure</h3>
+            <p>
+              Designing more reliable routes from source systems to analysis,
+              including database structures, reusable fact and dimension tables,
+              governance-aware definitions and reproducible data pipelines.
+            </p>
+            <div class="tags">
+              <span class="tag">Data Modelling</span>
+              <span class="tag">ETL</span>
+              <span class="tag">Governance</span>
+              <span class="tag">BI</span>
+            </div>
+          </article>
+
+          <article class="quest pixel-box">
+            <span class="quest-number">Quest 06 // Communication</span>
+            <h3>Analytics for Decision-Making</h3>
+            <p>
+              Translating technical work into dashboards, reports and visual
+              explanations that help non-technical stakeholders understand what
+              changed, why it matters and where action may be required.
+            </p>
+            <div class="tags">
+              <span class="tag">Storytelling</span>
+              <span class="tag">Dashboards</span>
+              <span class="tag">Reporting</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="toolkit">
+        <div class="section-heading">
+          <span class="level">Level 03</span>
+          <h2>Inventory</h2>
+        </div>
+
+        <p class="lead">
+          The tools I use to move from raw data to models, visualisations and usable outputs.
+        </p>
+
+        <div class="toolkit">
+          <div class="skill-card pixel-box">
+            <h3>Analytics</h3>
+            <ul>
+              <li>R</li>
+              <li>Python</li>
+              <li>SQL</li>
+              <li>Statistical modelling</li>
+              <li>Exploratory analysis</li>
+            </ul>
+          </div>
+
+          <div class="skill-card pixel-box">
+            <h3>Data</h3>
+            <ul>
+              <li>DuckDB</li>
+              <li>Data modelling</li>
+              <li>ETL / pipelines</li>
+              <li>XML processing</li>
+              <li>Data quality</li>
+            </ul>
+          </div>
+
+          <div class="skill-card pixel-box">
+            <h3>BI</h3>
+            <ul>
+              <li>Power BI</li>
+              <li>DAX</li>
+              <li>KPI design</li>
+              <li>Dashboard design</li>
+              <li>Data storytelling</li>
+            </ul>
+          </div>
+
+          <div class="skill-card pixel-box">
+            <h3>Sports</h3>
+            <ul>
+              <li>Expected threat</li>
+              <li>Markov models</li>
+              <li>Shot modelling</li>
+              <li>Event data</li>
+              <li>Video analysis</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="research">
+        <div class="section-heading">
+          <span class="level">Level 04</span>
+          <h2>Research Mode</h2>
+        </div>
+
+        <div class="research-layout">
+          <div class="terminal pixel-box">
+            <h3>research_terminal.exe</h3>
+
+            <p class="terminal-line"><span class="prompt">&gt;</span> FIELD = Gaelic football analytics</p>
+            <p class="terminal-line"><span class="prompt">&gt;</span> FOCUS = Possession value + decision-making</p>
+            <p class="terminal-line"><span class="prompt">&gt;</span> METHODS = Markov chains + expected threat + shot models</p>
+            <p class="terminal-line"><span class="prompt">&gt;</span> DATA = Manually coded match event data</p>
+            <p class="terminal-line"><span class="prompt">&gt;</span> OUTPUT = Quantitative models that coaches can interpret</p>
+            <p class="terminal-line"><span class="prompt">&gt;</span> STATUS = MSc by Research // IN PROGRESS<span class="cursor">_</span></p>
+          </div>
+
+          <div class="achievement-panel pixel-box">
+            <div class="achievement">
+              <div class="achievement-icon">01</div>
+              <div>
+                <strong>Possession as a state process</strong>
+                <span>Representing movement through pitch zones as transitions between states.</span>
+              </div>
+            </div>
+
+            <div class="achievement">
+              <div class="achievement-icon">02</div>
+              <div>
+                <strong>Expected threat</strong>
+                <span>Estimating how the value of possession changes as the ball progresses.</span>
+              </div>
+            </div>
+
+            <div class="achievement">
+              <div class="achievement-icon">03</div>
+              <div>
+                <strong>New-rules analysis</strong>
+                <span>Exploring modern Gaelic football structures, including the tactical value of two-point shooting.</span>
+              </div>
+            </div>
+
+            <div class="achievement">
+              <div class="achievement-icon">04</div>
+              <div>
+                <strong>Applied research</strong>
+                <span>Keeping model outputs interpretable enough to support real coaching decisions.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="contact-card pixel-box">
+          <span class="level">Final Level</span>
+          <h2>Continue?</h2>
+
+          <p>
+            I am interested in data analytics, business intelligence, sports
+            analytics and research collaborations. My GitHub is the best place
+            to follow the projects I am building.
+          </p>
+
+          <div class="contact-links">
+            <a class="btn" href="https://github.com/fowlerthefox" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <!-- Replace # below with your LinkedIn profile URL when ready -->
+            <a class="btn secondary" href="#" aria-label="LinkedIn link placeholder">LinkedIn</a>
+          </div>
+        </div>
+      </section>
     </div>
+  </main>
 
-    <div class="project">
-      <h3>Data Analytics & BI</h3>
-      <p>
-        Data engineering, Power BI, R, SQL and analytical reporting projects.
-      </p>
+  <footer>
+    <div class="wrap">
+      <span class="coin">●</span> 2026 CIARAN // BUILT WITH HTML + CSS // INSERT COIN TO CONTINUE
     </div>
-
-  </div>
-</section>
-
-<section>
-  <h2>Tools</h2>
-
-  <p>
-    R · Python · SQL · Power BI · DuckDB · Git · GitHub
-  </p>
-</section>
-
+  </footer>
 </body>
 </html>
