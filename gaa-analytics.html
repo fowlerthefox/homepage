@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gaelic football research using event tagging, Markov chains, expected threat and shot modelling.">
+  <meta name="theme-color" content="#070914">
+  <title>Gaelic Football Analytics | Ciaran Sheelan</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="index.html">FOWLER<small>THE</small>FOX // CIARAN</a>
+    <nav class="nav" aria-label="Main navigation"><a href="index.html" class="">Home</a><a href="projects.html" class="">Projects</a><a href="gaa-analytics.html" class="active">GAA</a><a href="soccer-analytics.html" class="">Soccer</a><a href="data-bi.html" class="">Data/BI</a><a href="research.html" class="">Research</a><a href="experience.html" class="">Journey</a></nav>
+  </div>
+</header>
+<main id="main">
+<div class="shell">
+  <section class="hero compact"><div><p class="kicker">Research Quest // Gaelic Football</p><h1>GAELIC<br>ANALYTICS<span class="cursor">_</span></h1><p class="hero-copy">The research asks a simple question with a difficult data problem: <strong>how valuable is possession, and which actions increase or reduce the probability of scoring?</strong></p></div></section>
+
+  <section class="section">
+    <div class="section-head"><span class="level">Game Loop</span><h2>From video to a model of possession</h2></div>
+    <div class="flow" aria-label="Research workflow"><div class="flow-step">Match video</div><div class="flow-step">Manual event tagging</div><div class="flow-step">Structured event data</div><div class="flow-step">Transition matrix</div><div class="flow-step">Expected threat</div><div class="flow-step">Tactical interpretation</div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="level">Map</span><h2>Possession states are spatial</h2></div>
+    <p class="lead">The pitch is represented as a set of possession states. Movement from one zone to another changes the estimated value of the possession, while shots and turnovers act as terminal outcomes in the model.</p>
+    <div class="pitch" aria-label="Simplified Gaelic football research zones"><div class="zone">Z1<small>Own endline → 45</small></div><div class="zone">Z2<small>45 → 65</small></div><div class="zone">Z3<small>Between 65s</small></div><div class="zone">Z4<small>Opp. 65 → 45</small></div><div class="zone">Z5<small>Opp. 45 → 20</small></div><div class="zone">5.2<small>2-point arc</small></div><div class="zone">6.1 / 6.2<small>Inside 20</small></div><div class="zone">6.3<small>Central goal zone</small></div></div>
+  </section>
+
+  <section class="section">
+    <div class="grid-2">
+      <article class="card pixel-box"><span class="card-kicker">Model 01</span><h3>Expected Threat</h3><p>A transition matrix captures the probability of moving between possession states or exiting through a shot/turnover. Markov chain methods estimate the expected scoring value of each zone. The value of an action can then be expressed as the change between the origin and destination states.</p><div class="tags"><span class="tag">Markov Chain</span><span class="tag">Transition Matrix</span><span class="tag">xT</span></div></article>
+      <article class="card pixel-box"><span class="card-kicker">Model 02</span><h3>Shot Modelling</h3><p>Shot-level work uses spatial and contextual variables such as location, distance, angle, shot type and pressure. This provides a route towards expected-point or expected-goal models and a better distinction between shot volume and shot quality.</p><div class="tags"><span class="tag">xP / xG</span><span class="tag">Spatial</span><span class="tag">Shot Quality</span></div></article>
+    </div>
+  </section>
+
+  <section class="section" id="tagging">
+    <div class="section-head"><span class="level">Build</span><h2>Custom match-tagging application</h2></div>
+    <p class="lead">The research requires event data that is not available in a ready-made feed. A bespoke tagging app was therefore developed so the dataset could be designed around the questions rather than limited by an existing provider.</p>
+    <div class="grid-3">
+      <div class="card pixel-box"><h3>Possession</h3><ul class="skill-list"><li>Possession gain/loss</li><li>Transitions</li><li>Turnovers</li><li>Kickouts</li><li>Lineballs</li></ul></div>
+      <div class="card pixel-box"><h3>Shots</h3><ul class="skill-list"><li>Point / goal / 2-point</li><li>Play / mark / free / 45</li><li>Outcome</li><li>Pitch coordinates</li><li>Pressure/context</li></ul></div>
+      <div class="card pixel-box"><h3>Workflow</h3><ul class="skill-list"><li>YouTube/video loading</li><li>Keyboard shortcuts</li><li>Pitch-zone tagging</li><li>Event ordering</li><li>Structured export</li></ul></div>
+    </div>
+    <div class="hero-actions"><a class="btn alt" href="https://github.com/fowlerthefox/gaa_new_rules_tagging_app" target="_blank" rel="noopener">View code on GitHub ↗</a></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="level">Research Question</span><h2>The two-point decision</h2></div>
+    <div class="grid-2"><div class="finding pixel-box"><span class="number">Risk vs reward</span><h3>When is the extra point worth the lower probability?</h3><p>The new two-point arc creates a natural decision problem. A longer shot may return twice the score of a conventional point, but only if the reduction in conversion probability is not too large.</p><p>The research can frame this quantitatively by comparing expected return across shot locations, game contexts and shot types.</p></div><div class="console pixel-box"><h3>decision_rule.txt</h3><p><span class="prompt">&gt;</span> EXPECTED_RETURN_1 = P(score_1) × 1</p><p><span class="prompt">&gt;</span> EXPECTED_RETURN_2 = P(score_2) × 2</p><p><span class="prompt">&gt;</span> CHOICE = context + pressure + location + game state</p><p><span class="prompt">&gt;</span> GOAL = quantify the trade-off, not prescribe every shot</p></div></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><span class="level">Output</span><h2>What the analysis should provide</h2></div>
+    <div class="grid-4"><div class="card pixel-box"><h3>Value</h3><p>A spatial estimate of the scoring value attached to possession.</p></div><div class="card pixel-box"><h3>Patterns</h3><p>Transition matrices that show how teams tend to progress the ball.</p></div><div class="card pixel-box"><h3>Decisions</h3><p>Risk/reward analysis for shots and possession movement.</p></div><div class="card pixel-box"><h3>Coaching</h3><p>Outputs expressed in language that coaches can use rather than model terminology alone.</p></div></div>
+  </section>
+</div>
+</main>
+<footer class="footer">
+  <div class="shell footer-inner">
+    <span><span class="coin">●</span> <span data-year></span> Ciaran Sheelan // Data + Sport + Research</span>
+    <span><a href="https://github.com/fowlerthefox" target="_blank" rel="noopener">GitHub</a> // <a href="https://www.linkedin.com/in/ciaran-sheelan-a20523a5" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>
